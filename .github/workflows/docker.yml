@@ -25,4 +25,4 @@ jobs:
       # Runs a single command using the runners shell
       - name: Docker Build
         run: |
-          docker build ./www -t marc9/termproject:latest
+          docker push marc9/termproject:latest
