@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Priority Now</title>
+                <meta charset="utf-8">
+                <link rel="stylesheet" type="text/css" href="priority_now.css"> 
+        </head>
+
+        <body>
+        <!-- First Row -->
+                <form action="./test_link.html" method="GET">
+                        <input type="submit" name="previous" value="Previous">
+                </form>
+
+                <h1>Priority Now<span id="priority"> [1] </span></h1>
+
+                <form action="./test_link.html" method="GET">
+                        <input type="submit" name="next" value="next">
+                </form>
+        <hr>
+                <p> 
+                        <!-- Second Row -->                             
+                        <div>It's time to work on: <span id="task_name">Task Name</span>
+                        </div>
+                        
+                        <!--Row that comes after Second but I dont feel like changing all the other row numbers -->
+                        
+                        <div>Difficulty: <span id="difficulty">Task Difficulty</span>
+                        </div> 
+                        
+                        <!-- Third Row -->
+
+                        <div>Details: <span id="details">Task Description</span>
+                        </div> 
+
+                        <!-- Fourth Row -->
+                        <div>Deadline:
+                        <span id="deadline_date">MM/DD/YY</span>                       
+                        <span id="deadline_time">HR:MN (a/p)m</span>
+                        </div>
+
+                        <!-- Fifth Row -->
+                        <div>Previous Time Spent: <span id="prev_time_spent">HR:MN</span>
+                        </div>
+
+                        <!-- Sixth Row -->
+                        <div>Time Remaining: <span id="time_remaining">HR:MN</span> 
+                        </div>     
+                </p>
+        <hr>
+                <!-- Seventh Row -->
+                <form action="./test_link.html" method ="POST">
+                        <label for="time_Spent_hr">Log time spent now: </label>
+                        <input type="number" id="time_spent_hr" name="time_spent_hr" step="1" size="2" max="24" min="0" required>hrs
+                        <label for="time_spent_mn"></label>
+                        <input type="number" id="time_spent_mn" name="time_spent_mn" step="1" size="2" max="60" min="0" required>mins
+                        <br>
+                        <input type="submit" name="update" value="update"> 
+                </form>
+        <hr>
+
+                <!-- Eighth Row -->
+                <form action="./test_link.html" method="POST">
+                        <input type="submit" name="complete" value="Mark Complete">                
+                </form>
+
+                <input type="button" onclick="location.href='./edit.html';" value="Edit">       
+                <input type="button" onclick="location.href='./options.html';" value="Options">
+        </body>
+</html>

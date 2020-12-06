@@ -1,0 +1,12 @@
+Task Name: String (text field)
+Task Description: String (text area)
+Deadline: 2 Strings (MM/DD/YY) and (HR:MN am/pm) // reg ex controlled
+Estimated Time for Completion: String (HR:MN am/pm) // reg ex controlled
+Time Spent: String (HR:MN am/pm) // reg ex controlled
+
+Difficulty: Integer // *** We need to discuss relevance and range ***
+
+Calculations:
+time_remaining = estimated_time - time_spent
+Stress based priority
+Stress Level (calculated at set time intervals for the graph)
