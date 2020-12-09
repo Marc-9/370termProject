@@ -3,6 +3,7 @@ session_start();
 include('checkCookie.php');
 if(!isset($_SESSION['id'])){
     header("Location: registration.php");
+    exit();
 }
 require('config.php');
 $tasks = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE1);
@@ -269,6 +270,7 @@ $("#submitButtonId").click(function() {
            {
                 reOrderTasks();
                 $('#addTask').modal('hide');
+                $("#addFormTask").find("input[type=text], textarea").val("");
 
            }
          });
