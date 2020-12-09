@@ -1,69 +1,30 @@
-<?php
+<!DOCTYPE html>
+<html>
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    header('location:login.php');
-    exit();
-}
-function set_cookie($name, $pass){
-    $name_length = strlen($name);
-    $pass_length = strlen($pass);
-    $val = substr($name,1,$name_length/2).substr($pass, 1,$pass_length/2).rand(1,1000);
-    $cookie = password_hash($val, PASSWORD_DEFAULT);
-    setcookie("login",$cookie, time()+31536000);
-    return password_hash($cookie, PASSWORD_DEFAULT);
-}
-function generateRandomString($length = 16) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
-require_once('config.php');
-$users = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE1);
-if(!isset($_POST['user']) || !isset($_POST['password'])){
-    header('location:login.php');
-    exit();
-}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Registration | Task Manager</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
 
-$name = htmlspecialchars(trim($_POST['user']));
-$pass = $_POST['password'];
+<body>
+    <div class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+             <form action="createAccount.php" method="post">
+                <h2 class="text-center"><strong>Create</strong> an account.</h2>
+                <div class="form-group"><input class="form-control" type="text" name="user" placeholder="Username"></div>
+                <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                <div class="form-group"><input class="form-control" type="password" name="password-repeat" placeholder="Password (repeat)"></div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign Up</button></div><a class="already" href="login.php">You already have an account? Login here.</a></form>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
 
-$stmt = $users->prepare("SELECT id FROM users WHERE username=?");
-$stmt->bind_param("s", $name);
-$stmt->execute();
-$stmt->store_result();
-
-if($stmt->num_rows > 0){
-    $stmt->close();
-    $users->close();
-    header('location:login.php?error=exists');
-    exit();
-}
-
-
-
-$ins_cookie = set_cookie($name,$pass);
-$new_password = password_hash($pass, PASSWORD_DEFAULT);
-$apiKey = generateRandomString();
-$stmt = $users->prepare("INSERT INTO `users` (`username`, `password`, cookie, apiKey ) VALUES ( ?, ?, ?, ?)");
-$stmt->bind_param("ssss", $name,$new_password, $ins_cookie, $apiKey);
-// Insertion was a success
-if($stmt->execute()){
-    $date = date('Y-m-d H:i:s');
-    $users->query("UPDATE users SET lastLogin = '$date' WHERE id = $stmt->insert_id ");
-    $users->close();
-    setcookie("id", $stmt->insert_id,time()+31536000);
-    $stmt->close();
-    header('location:index.php');
-}
-// Really no reason for it to fail but its here when I was debugging
-else{
-    $users->close();
-    $stmt->close();
-    header('location:login.php?error=5');
-}
-
-?>
+</html>
