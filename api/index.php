@@ -252,7 +252,7 @@ if($requestType == "GET"){
 			$tillDueDate = strtotime($oneTask['dueDate']);
 			$datediff = $tillDueDate - $today;
 			$tillDueDate = round($datediff / (60 * 60 * 24));
-			if($tillDueDate == 0){
+			if($tillDueDate <= 0){
 				$totnum = 999;
 			}
 			else{
@@ -295,7 +295,8 @@ if($requestType == "GET"){
 		if(strlen($task['description']) == 0){
 		}
 		else{
-			$response = $response.',"Description": "'.$task['description'].'"';
+			$desc =  str_replace(array("\n", "\r"), '', $task['description']);
+			$response = $response.',"Description": "'.$desc.'"';
 		}
 		$response .= "}]}";
 		echo $response;
