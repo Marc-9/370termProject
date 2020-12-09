@@ -1,6 +1,9 @@
 <?php
 session_start();
 include('checkCookie.php');
+if(!isset($_SESSION['id'])){
+    header("Location: registration.php");
+}
 require('config.php');
 $tasks = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE1);
 
@@ -305,10 +308,9 @@ function addFromCanvas(){
            data: $("#editFormCanvas").serialize(), // serializes the form's elements.
            success: function(data)
            {
-                alert(data);
-                //reOrderTasks();
-                //$('#editTask').modal('hide');
-                //getUserInfo();
+                reOrderTasks();
+                $('#addCanvas').modal('hide');
+                getUserInfo();
 
            }
          });
@@ -376,7 +378,7 @@ function addCanvas(){
 }
 
 function returnModal(taskName, dueDate, completionTime, priority, description="", counter){
-    return '<label class="required" for="taskName'+counter+'">Task Name</label><input class="form-control" value="'+taskName+'" type="text" id="editTaskName" name="taskName'+counter+'" required><label class="required" for="dueDate'+counter+'">Due Date</label><input id="editdueDate" value="'+dueDate+'" class="form-control" type="text" name="dueDate'+counter+'" required><label class="required" for="completionTime'+counter+'">Completion Time (hours)</label><input id="editlengthHours" value="'+completionTime+'" class="form-control-number" type="number" name="completionTime'+counter+'" min="0" max="15"><br><label class="required" for="priority'+counter+'">Priority</label><input id="editpriority" value="'+priority+'" class="form-control-number number" type="number" name="priority'+counter+'" min="1" max="10" required><br><label for="description'+counter+'">Description<br><textarea id="editDescription" value="'+description+'" class="form-control" name="description'+counter+'"></textarea></label><br>';
+    return '<label class="required" for="taskName'+counter+'">Task Name</label><input class="form-control" value="'+taskName+'" type="text" id="editTaskName" name="taskName'+counter+'" required><label class="required" for="dueDate'+counter+'">Due Date</label><input id="editdueDate" value="'+dueDate+'" class="form-control" type="text" name="dueDate'+counter+'" required><label class="required" for="completionTime'+counter+'">Completion Time (hours)</label><input id="editlengthHours" value="'+completionTime+'" class="form-control-number" type="number" name="completionTime'+counter+'" min="0" max="15"><br><label class="required" for="priority'+counter+'">Priority</label><input id="editpriority" value="'+priority+'" class="form-control-number number" type="number" name="priority'+counter+'" min="1" max="10" required><br><label for="description'+counter+'">Description<br><textarea id="editDescription" class="form-control" name="description'+counter+'">'+description+'</textarea></label><input type="hidden" id="delim" name="delim'+counter+'"><br>';
 }
 
 function reOrderTasks(){

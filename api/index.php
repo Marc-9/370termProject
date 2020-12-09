@@ -46,11 +46,12 @@ if($requestType == "GET"){
 				}
 			}
 			else{
+				$desc =  str_replace(array("\n", "\r"), '', $task['description']);
 				if($count == 1){
-					$response = $response.',"Description": "'.$task['description'].'",';
+					$response = $response.',"Description": "'.$desc.'",';
 				}
 				else{
-					$response = $response.',"Description": "'.$task['description'].'"},';
+					$response = $response.',"Description": "'.$desc.'"},';
 				}
 				
 			}
@@ -70,7 +71,10 @@ if($requestType == "GET"){
 				$response = rtrim($response, ", ");
 			}
 		}
-		$response = $response."}]";
+		if(mysqli_num_rows($all_tasks) > 0){
+			$response = $response."}";
+		}
+		$response = $response."]";
 		$html_response .= '",';
 		$carousel_response .= '"}';
 		$response .= $html_response;
@@ -372,19 +376,32 @@ if($requestType == "POST"){
 	}
 
 	if($_GET['url'] == 'addFromCanvas'){
-		var_dump($_POST);
-		/*
-		$taskName = $_POST['taskName'];
-		$sqlDate = explode("/",$_POST['dueDate']);
-		$dueDate = $sqlDate[2].'-'.$sqlDate[0].'-'.$sqlDate[1];
-		$taskLength = $_POST['completionTime'];
-		$priority = $_POST['priority'];
-		$description = $_POST['description'];
-		if(strlen($description) == 0){
-			$description = "";
+		foreach ($_POST as $key => $value) {
+			if(strpos($key, 'taskName') !== false){
+				$taskName = $value;
+			}
+			if(strpos($key, 'dueDate') !== false){
+				$dueDate = $value;
+			}
+			if(strpos($key, 'completionTime') !== false){
+				$completionTime = $value;
+			}
+			if(strpos($key, 'priority') !== false){
+				$priority = $value;
+			}
+			if(strpos($key, 'description') !== false){
+				$description = $value;
+			}
+			if(strpos($key, 'delim') !== false){
+				insert_Task($taskName, $dueDate, $completionTime, $priority, $description, $result['id']);
+				$taskName = "";
+				$dueDate = "";
+				$completionTime = "";
+				$priority = "";
+				$description = "";
+			}
+
 		}
-		
-		insert_Task($taskName, $dueDate, $taskLength, $priority, $description, $result['id']);*/
 
 	}
 
