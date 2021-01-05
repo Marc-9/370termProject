@@ -1,7 +1,7 @@
 var currentTime = new Date();
 var hours = currentTime.getHours();
 var minutes = currentTime.getMinutes();
-var month = currentTime.getMonth();
+var month = currentTime.getMonth() + 1;
 var day = currentTime.getDate();
 
 var suffix = "AM";
